@@ -4,7 +4,7 @@
 
 Skeleton::Skeleton(SDL_Texture *_texture,  SDL_Texture *_idleTexture)
 {
-    tthis->texture = _texture;
+    this->texture = _texture;
     this->idleTexture = _idleTexture;
     this->textureRect = {0, 0, 32, 32};
     this->positionRect = {0, 0, 6, 6};
@@ -24,15 +24,15 @@ void Skeleton::animate(double elapsedTime)
 
     if ( this->isIdle ) 
     {
-        this->sprite = this->attackAnimation->Animate(elapsedTime, this->sprite);
+        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
     }
     else 
     {   
-        this->sprite = this->attackAnimation->Animate(elapsedTime, this->sprite);
+        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
     }
 };
 
-void Skeleton::render(RenderWindow &window)
+void Skeleton::render(SDL_Renderer *_renderer)
 {   
     SDL_RenderCopy(_renderer, this->texture, &this->textureRect, &this->positionRect);
 };
