@@ -4,8 +4,8 @@
 Menu::Menu(SDL_Texture *_texture)
 {
     this->texture = _texture;
-    this->textureRect = {98, 1, 143, 24};
-    this->positionRect = {0, 0, 14, 10};
+    this->textureRect = {98, 2, 143, 24};
+    this->positionRect = {0, 0, 620, 90};
 };
 
 void Menu::move(int _x, int _y)

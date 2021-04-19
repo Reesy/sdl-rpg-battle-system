@@ -66,8 +66,11 @@ SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren)
 }
 
 
-static void update(float elapsed)
+static void update(double elapsed)
 {
+    
+  
+    
     return;
     // if (selecting_attack)
     // {
@@ -86,8 +89,6 @@ static void render()
     SDL_SetRenderDrawColor(renderer, 91, 10, 145, 255);
     SDL_RenderClear(renderer);
     
-
-
     menu->render(renderer);
     knight->render(renderer);
     slime->render(renderer);
@@ -172,10 +173,10 @@ static void loadResources()
 static void init()
 {
     SDL_SetWindowIcon(window, icon);
-  //  window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
- //   window.setFramerateLimit(60);
+
+
     menu = new Menu(menu_texture);
-    menu->move(0, 830);
+    menu->move(10, 270);
 
     // attack_text.setCharacterSize(60);
     // attack_text.setStyle( Text::Bold);
@@ -196,9 +197,9 @@ static void init()
     slime = new Slime(slime_texture_sheet, slime_texture_sheet);
     slime2 = new Slime(slime_texture_sheet, slime_texture_sheet);
     skeleton = new Skeleton(skeleton_texture_sheet, skeleton_texture_sheet);
-    slime->move(1000, 0);
-    slime2->move(1200, 200);
-    skeleton->move(1500, 550);
+    slime->move(500, -35);
+    slime2->move(500, 85);
+    skeleton->move(470, 100);
 };
 
 void gameLoop()
@@ -222,7 +223,10 @@ void gameLoop()
         slime->animate(dt);
         slime2->animate(dt);
         skeleton->animate(dt);
+        accumulator -= dt;
     }
+
+    render();
 
     while (SDL_PollEvent(event))
     {
@@ -259,11 +263,11 @@ int main(int, char const**)
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
     
-    window = SDL_CreateWindow("SDL RPG BATTLE SYSTEM", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("SDL RPG BATTLE SYSTEM", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 360, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     
-    if (!SDL_RenderSetLogicalSize(renderer, 1280, 720))
+    if (!SDL_RenderSetLogicalSize(renderer, 640, 360))
     {
         std::cout << SDL_GetError() << std::endl;
     }

@@ -6,8 +6,8 @@ Slime::Slime(SDL_Texture *_texture,  SDL_Texture *_idleTexture)
 {
     this->texture = _texture;
     this->idleTexture = _idleTexture;
-    this->textureRect = {0, 0, 200, 200};
-    this->positionRect = {0, 0, 6, 6};
+    this->textureRect = {0, 0, 70, 70};
+    this->positionRect = {0, 0, 150, 150};
     this->isIdle = false;
      this->attackAnimation = new Animator(48, 14, 70, 70);
 

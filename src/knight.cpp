@@ -6,8 +6,8 @@ Knight::Knight(SDL_Texture *_texture, SDL_Texture *_idleTexture)
 {
     this->texture = _texture;
     this->idleTexture = _idleTexture;
-    this->textureRect = {0, 0, 200, 200};
-    this->positionRect = {0, 0, 10, 10};
+    this->textureRect = {0, 0, 120, 60};
+    this->positionRect = {0, 0, 200, 200};
  //   this->sprite.setTexture(this->idleTexture);
  //   this->sprite.setTextureRect( IntRect(0, 0, 200, 200));
   //  this->sprite.setScale(10, 10);
