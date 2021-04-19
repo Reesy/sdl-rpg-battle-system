@@ -6,21 +6,17 @@ Slime::Slime(SDL_Texture *_texture,  SDL_Texture *_idleTexture)
 {
     this->texture = _texture;
     this->idleTexture = _idleTexture;
-    this->sprite.setTexture(this->texture);
-    this->sprite.setTextureRect( IntRect(0, 0, 200, 200));
-    this->x = 0;
-    this->y = 0;
+    this->textureRect = {0, 0, 200, 200};
+    this->positionRect = {0, 0, 6, 6};
     this->isIdle = false;
-    this->sprite.setScale(6, 6);
-    this->attackAnimation = new Animator(48, 14, 70, 70);
+     this->attackAnimation = new Animator(48, 14, 70, 70);
 
 };
 
 void Slime::move(int _x, int _y)
 {
-    x += _x;
-    y += _y;
-    this->sprite.move(_x, _y);
+    this->positionRect.x += _x;
+    this->positionRect.y += _y;
 };
 
 void Slime::animate(double elapsedTime)
@@ -28,17 +24,17 @@ void Slime::animate(double elapsedTime)
 
     if ( this->isIdle ) 
     {
-        this->sprite = this->attackAnimation->Animate(elapsedTime, this->sprite);
+        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
     }
     else 
     {   
-        this->sprite = this->attackAnimation->Animate(elapsedTime, this->sprite);
+        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
     }
 };
 
-void Slime::render(SDL_Renderer *_window)
+void Slime::render(SDL_Renderer *_renderer)
 {   
-    window.draw(this->sprite);
+    SDL_RenderCopy(_renderer, this->texture, &this->textureRect, &this->positionRect);
 };
 
 void Slime::setIdle(bool _idle)
