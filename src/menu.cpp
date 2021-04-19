@@ -1,26 +1,22 @@
 #include <iostream>
 #include <Menu.hpp>
 
-Menu::Menu( Texture _texture)
+Menu::Menu(SDL_Texture *_texture)
 {
     this->texture = _texture;
-    this->sprite.setTexture(this->texture);
-    this->sprite.setTextureRect( IntRect(98, 1, 143, 25));
-    this->sprite.setScale(13.42, 10);
-    this->x = 0;
-    this->y = 0;
+    this->textureRect = {98, 1, 143, 24};
+    this->positionRect = {0, 0, 14, 10};
 };
 
 void Menu::move(int _x, int _y)
 {
-    x += _x;
-    y += _y;
-    this->sprite.move(_x, _y);
+    this->positionRect.x += _x;
+    this->positionRect.y += _y;
 };
 
-void Menu::render( RenderWindow &window)
+void Menu::render(SDL_Renderer *_renderer)
 {
-    window.draw(this->sprite);
+    SDL_RenderCopy(_renderer, this->texture, &this->textureRect, &this->positionRect);
 };
 
 

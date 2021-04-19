@@ -8,12 +8,13 @@ class Menu: public IMovable,
     private:
         int x,y;
         SDL_Texture* texture;
-        SDL_Texture* sprite;
-        
+        SDL_Rect textureRect;
+        SDL_Rect positionRect;
+      
     public: 
         Menu(SDL_Texture* _texture);
         void move(int _x, int _y);
-        void render(SDL_Renderer *_renderer));
+        void render(SDL_Renderer *_renderer);
         int getX();
         int getY(); 
 };
