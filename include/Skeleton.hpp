@@ -10,7 +10,8 @@ class Skeleton: public IMovable,
         int x,y;
         SDL_Texture* texture;
         SDL_Texture* idleTexture;
-        SDL_Texture* sprite;
+        SDL_Rect textureRect;
+        SDL_Rect positionRect;
         float animationFrameTimer;
         float isIdle;
         Animator* attackAnimation;

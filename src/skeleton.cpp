@@ -2,28 +2,24 @@
 #include <Skeleton.hpp>
 #include <Animator.hpp>
 
-Skeleton::Skeleton( Texture _texture,  Texture _idleTexture)
+Skeleton::Skeleton(SDL_Texture *_texture,  SDL_Texture *_idleTexture)
 {
-    this->texture = _texture;
+    tthis->texture = _texture;
     this->idleTexture = _idleTexture;
-    this->sprite.setTexture(this->texture);
-    this->sprite.setTextureRect( IntRect(0, 0, 32, 32));
-    this->x = 0;
-    this->y = 0;
+    this->textureRect = {0, 0, 32, 32};
+    this->positionRect = {0, 0, 6, 6};
     this->isIdle = false;
-    this->sprite.setScale(6, 6);
     this->attackAnimation = new Animator(5, 5, 32, 32);
 
 };
 
 void Skeleton::move(int _x, int _y)
 {
-    x += _x;
-    y += _y;
-    this->sprite.move(_x, _y);
+    this->positionRect.x += _x;
+    this->positionRect.y += _y;
 };
 
-void Skeleton::animate(float elapsedTime)
+void Skeleton::animate(double elapsedTime)
 {
 
     if ( this->isIdle ) 
@@ -38,7 +34,7 @@ void Skeleton::animate(float elapsedTime)
 
 void Skeleton::render(RenderWindow &window)
 {   
-    window.draw(this->sprite);
+    SDL_RenderCopy(_renderer, this->texture, &this->textureRect, &this->positionRect);
 };
 
 void Skeleton::setIdle(bool _idle)
