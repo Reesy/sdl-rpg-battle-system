@@ -24,23 +24,23 @@
 
 
 //game objects
-sf::RenderWindow window(sf::VideoMode(1920, 1080), "SDL RPG BATTLE SYSTEM");
-sf::Event event;
-sf::Font font;
-sf::Text attack_text("Attack", font);
-sf::Text escape_text("Escape", font);
-sf::Time game_time;
-sf::Music menu_change_sound;
-sf::Texture menu_texture;
-sf::Sprite cursor_sprite;
-sf::Image icon;
+SDL_Event *event = NULL;
+SDL_Window *window = NULL;
+SDL_Renderer *renderer = NULL;
+TTF_Font *font = NULL;
+// Text attack_text("Attack", font);
+// Text escape_text("Escape", font);
+Mix_Chunk *menu_change_sound = NULL;
+SDL_Texture *menu_texture = NULL;
+SDL_Texture *cursor_sprite = NULL;
+SDL_Surface *icon = NULL;
 
 //Characters 
 
-sf::Texture knight_texture_sheet;
-sf::Texture slime_texture_sheet;
-sf::Texture knight_idle_sheet;
-sf::Texture skeleton_texture_sheet;
+SDL_Texture *knight_texture_sheet = NULL;
+SDL_Texture *slime_texture_sheet = NULL;
+SDL_Texture *knight_idle_sheet = NULL;
+SDL_Texture *skeleton_texture_sheet = NULL;
 
 Knight* knight;
 Slime* slime;
@@ -48,86 +48,116 @@ Slime* slime2;
 Skeleton* skeleton;
 Menu* menu;
 bool selecting_attack = true;
+bool quit = false;
 
-const sf::Color background_color(91, 10, 145);
+SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren)
+{
+	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
+	if (texture == nullptr)
+	{
+        printf("Failed to load image\n", file.c_str());
+        std::cout << "Failure reason: " << IMG_GetError() << std::endl;
+	}
+	return texture;
+}
+
 
 static void update(float elapsed)
 {
-    if (selecting_attack)
-    {
-        cursor_sprite.setPosition(300, 910);
-    }   
-    else
-    {
-        cursor_sprite.setPosition(1000, 910);
-    }
+    return;
+    // if (selecting_attack)
+    // {
+    //     cursor_sprite.setPosition(300, 910);
+    // }   
+    // else
+    // {
+    //     cursor_sprite.setPosition(1000, 910);
+    // }
     
 };
 
 static void render()
 {
-    menu->render(window);
-    knight->render(window);
-    slime->render(window);
-    slime2->render(window);
-    skeleton->render(window);
-    window.draw(attack_text);
-    window.draw(escape_text);
-    window.draw(cursor_sprite);
+
+    SDL_SetRenderDrawColor(renderer, 91, 10, 145, 255);
+    SDL_RenderClear(renderer);
+    
+
+
+    menu->render(renderer);
+    knight->render(renderer);
+    slime->render(renderer);
+    slime2->render(renderer);
+    skeleton->render(renderer);
+
+
+    // window.draw(attack_text);
+    // window.draw(escape_text);
+    // window.draw(cursor_sprite);
+
+
+    SDL_RenderPresent(renderer);
 };
 
 static void input()
 {
     
-    if (event.type == sf::Event::Closed) 
+    if (event->type == SDL_QUIT) 
     {
-        
-        window.close();
-    }
+        quit = true;
+    };
     
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) 
+    if (event->type == SDL_KEYDOWN)
     {
-        window.close();
-    }
-
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
-    {
-        if (selecting_attack)
+        switch (event->key.keysym.sym)
         {
-            selecting_attack = false;
-            menu_change_sound.play();
-        }
-    }
+            case SDLK_RIGHT:
+                if (selecting_attack)
+                {
+                    selecting_attack = false;
+                    //menu_change_sound.play();
+                };
+                break;
+            case SDLK_LEFT:
+                if (!selecting_attack)
+                {
+                    selecting_attack = true;
+                    //menu_change_sound.play();
+                };
+            case SDLK_RETURN:
+                if (selecting_attack)
+                {
+                    knight->setIdle(false);
+                };
+            default:
+                break;
 
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)
-    {
-        if (!selecting_attack)
-        {
-            selecting_attack = true;
-            menu_change_sound.play();
-        }
-    }
-
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return)
-    {
-        if (selecting_attack)
-        {
-            knight->setIdle(false);
-        }
-    }
-
-}
+        };
+    };
+};
 
 static void loadResources()
 {
-    font.loadFromFile("resources/sansation.ttf");
-    menu_texture.loadFromFile("resources/ff_menu.png");
-    menu_change_sound.openFromFile("resources/ff_bleep.ogg");
-	icon.loadFromFile("resources/icon.png");
-    knight_texture_sheet.loadFromFile("resources/knight_spritesheet.png");
-    knight_idle_sheet.loadFromFile("resources/knight_idle.png");
-    slime_texture_sheet.loadFromFile("resources/slime_spritesheet.png");
-    skeleton_texture_sheet.loadFromFile("resources/skeleton.png");
+  //  font.loadFromFile("resources/sansation.ttf");
+    menu_texture = loadTexture("resources/ff_menu.png", renderer);
+    knight_texture_sheet = loadTexture("resources/knight_spritesheet.png", renderer);
+    knight_idle_sheet = loadTexture("resources/knight_idle.png", renderer);
+    slime_texture_sheet = loadTexture("resources/slime_spritesheet.png", renderer);
+    skeleton_texture_sheet = loadTexture("resources/skeleton.png", renderer);
+   
+    menu_change_sound = Mix_LoadWAV("resources/ff_bleep.ogg"); 
+    if (menu_change_sound == NULL)
+    {
+        std::cout << "Faled to load menu change sound! SDL_MiXER_ERROR: " << Mix_GetError() << std::endl;
+    }
+
+    icon = IMG_Load("resources/icon.png");
+    if (icon == NULL)
+    {
+        std::cout << "Faled to load icon! SDL_Image error: " << IMG_GetError() << std::endl;
+    }
+
+
 };
 
 static void init()
@@ -138,16 +168,16 @@ static void init()
     menu->move(0, 830);
 
     attack_text.setCharacterSize(60);
-    attack_text.setStyle(sf::Text::Bold);
-    attack_text.setFillColor(sf::Color::White);
+    attack_text.setStyle( Text::Bold);
+    attack_text.setFillColor( Color::White);
     attack_text.move(400, 920);
     escape_text.setCharacterSize(60);
-    escape_text.setStyle(sf::Text::Bold);
-    escape_text.setFillColor(sf::Color::White);
+    escape_text.setStyle( Text::Bold);
+    escape_text.setFillColor( Color::White);
     escape_text.move(1100, 920);
 
     cursor_sprite.setTexture(menu_texture);
-    cursor_sprite.setTextureRect(sf::IntRect(241, 223.3, 17, 17));
+    cursor_sprite.setTextureRect( IntRect(241, 223.3, 17, 17));
     cursor_sprite.setScale(6, 6);
     cursor_sprite.setPosition(300, 910);
 
@@ -166,13 +196,13 @@ int main(int, char const**)
 
     loadResources();
     init();
-    sf::Clock clock;
+    Clock clock;
     game_time = clock.restart();
 
     while (window.isOpen())
     {
         
-        sf::Time elapsed = clock.restart();
+         Time elapsed = clock.restart();
         
         while (window.pollEvent(event))
         {

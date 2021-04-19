@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <vector>
-#include <IGameObject.hpp>
+
 #pragma once
 class ICollidable
 {

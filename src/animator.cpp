@@ -12,9 +12,9 @@ Animator::Animator(int _frameCount,
     height = _height;
 };
 
-SDL_Texture* Animator::Animate(float elapsedTime, SDL_Texture* _sprite)
+SDL_Texture* Animator::Animate(double _elapsedTime, SDL_Texture *_sprite)
 {
-    animationFrameTimer += elapsedTime * speed;
+    animationFrameTimer += _elapsedTime * speed;
     
     int frame = floor(animationFrameTimer);
 

@@ -8,19 +8,19 @@ class Skeleton: public IMovable,
 {
     private:
         int x,y;
-        sf::Texture texture;
-        sf::Texture idleTexture;
-        sf::Sprite sprite;
+        SDL_Texture* texture;
+        SDL_Texture* idleTexture;
+        SDL_Texture* sprite;
         float animationFrameTimer;
         float isIdle;
         Animator* attackAnimation;
 
         
     public: 
-        Skeleton(sf::Texture _texture, sf::Texture _idleTexture);
-        void move(int x, int y);
-        void render(sf::RenderWindow &window);
-        void animate(float elapsedTime);
+        Skeleton(SDL_Texture* _texture, SDL_Texture* _idleTexture);
+        void move(int _x, int _y);
+        void render(SDL_Renderer *_renderer);
+        void animate(double _elapsedTime);
         void setIdle(bool _idle);
         int getX();
         int getY(); 

@@ -2,12 +2,12 @@
 #include <Knight.hpp>
 #include <Animator.hpp>
 
-Knight::Knight(sf::Texture _texture, sf::Texture _idleTexture)
+Knight::Knight(SDL_Texture *_texture, SDL_Texture *_idleTexture)
 {
     this->texture = _texture;
     this->idleTexture = _idleTexture;
     this->sprite.setTexture(this->idleTexture);
-    this->sprite.setTextureRect(sf::IntRect(0, 0, 200, 200));
+    this->sprite.setTextureRect( IntRect(0, 0, 200, 200));
     this->x = 0;
     this->y = 0;
     this->isIdle = true;
@@ -24,7 +24,7 @@ void Knight::move(int _x, int _y)
     this->sprite.move(_x, _y);
 };
 
-void Knight::animate(float elapsedTime)
+void Knight::animate(double elapsedTime)
 {
     if ( this->isIdle ) 
     {
@@ -39,7 +39,7 @@ void Knight::animate(float elapsedTime)
     }
 };
 
-void Knight::render(sf::RenderWindow &window)
+void Knight::render(SDL_Renderer *_renderer)
 {   
     window.draw(this->sprite);
 };

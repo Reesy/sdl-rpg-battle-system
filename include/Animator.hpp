@@ -15,5 +15,5 @@ class Animator
                    float _speed,
                    float _width,
                    float _height);
-        SDL_Texture* Animate(float elapsedTime, SDL_Texture* Sprite);
+        SDL_Texture* Animate(double _elapsedTime, SDL_Texture *_Sprite);
 };

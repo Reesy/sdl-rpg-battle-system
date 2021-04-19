@@ -2,12 +2,12 @@
 #include <Skeleton.hpp>
 #include <Animator.hpp>
 
-Skeleton::Skeleton(sf::Texture _texture, sf::Texture _idleTexture)
+Skeleton::Skeleton( Texture _texture,  Texture _idleTexture)
 {
     this->texture = _texture;
     this->idleTexture = _idleTexture;
     this->sprite.setTexture(this->texture);
-    this->sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    this->sprite.setTextureRect( IntRect(0, 0, 32, 32));
     this->x = 0;
     this->y = 0;
     this->isIdle = false;
@@ -36,7 +36,7 @@ void Skeleton::animate(float elapsedTime)
     }
 };
 
-void Skeleton::render(sf::RenderWindow &window)
+void Skeleton::render(RenderWindow &window)
 {   
     window.draw(this->sprite);
 };

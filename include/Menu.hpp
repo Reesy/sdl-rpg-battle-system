@@ -7,13 +7,13 @@ class Menu: public IMovable,
 {
     private:
         int x,y;
-        sf::Texture texture;
-        sf::Sprite sprite;
+        SDL_Texture* texture;
+        SDL_Texture* sprite;
         
     public: 
-        Menu(sf::Texture _texture);
-        void move(int x, int y);
-        void render(sf::RenderWindow &window);
+        Menu(SDL_Texture* _texture);
+        void move(int _x, int _y);
+        void render(SDL_Renderer *_renderer));
         int getX();
         int getY(); 
 };

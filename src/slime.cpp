@@ -2,12 +2,12 @@
 #include <Slime.hpp>
 #include <Animator.hpp>
 
-Slime::Slime(sf::Texture _texture, sf::Texture _idleTexture)
+Slime::Slime(SDL_Texture *_texture,  SDL_Texture *_idleTexture)
 {
     this->texture = _texture;
     this->idleTexture = _idleTexture;
     this->sprite.setTexture(this->texture);
-    this->sprite.setTextureRect(sf::IntRect(0, 0, 200, 200));
+    this->sprite.setTextureRect( IntRect(0, 0, 200, 200));
     this->x = 0;
     this->y = 0;
     this->isIdle = false;
@@ -23,7 +23,7 @@ void Slime::move(int _x, int _y)
     this->sprite.move(_x, _y);
 };
 
-void Slime::animate(float elapsedTime)
+void Slime::animate(double elapsedTime)
 {
 
     if ( this->isIdle ) 
@@ -36,7 +36,7 @@ void Slime::animate(float elapsedTime)
     }
 };
 
-void Slime::render(sf::RenderWindow &window)
+void Slime::render(SDL_Renderer *_window)
 {   
     window.draw(this->sprite);
 };
