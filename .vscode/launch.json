@@ -8,7 +8,7 @@
             "name": "Debug",
             "type": "lldb",
             "request": "launch",
-            "program": "./build/sdl-rpg-battle-system",
+            "program": "./build/SDLRPGBATTLESYSTEM",
             "cwd": "${workspaceRoot}",
             "args": [
                 "-arg1",

@@ -1,30 +1,43 @@
 #include <Animator.hpp>
+#include <iostream>
 
-
-Animator::Animator(int _frameCount,
-                   float _speed,
+Animator::Animator(int _numberOfFrames,
+                   int _frameDuration,
                    float _width,
                    float _height)
 {
-    frameCount = _frameCount - 1; //indexing starts at zero
-    speed = _speed;
+    numberOfFrames = _numberOfFrames; //indexing starts at zero
+    frameDuration = _frameDuration;
     width = _width;
     height = _height;
+    currentFrameNumber = 0;
 };
 
-SDL_Texture* Animator::Animate(double _elapsedTime, SDL_Texture *_sprite)
+void Animator::Animate(double _dt, SDL_Rect* _textureRect)
 {
-    animationFrameTimer += _elapsedTime * speed;
-    
-    int frame = floor(animationFrameTimer);
 
-    int framePosition = frame * width;
-    
-    if (frame >= frameCount)
-    {
+    // std::cout << "****** animator class *********" <<  std::endl;
+
+    // std::cout << "animationFrameTimer: " <<  animationFrameTimer << std::endl;
+    // std::cout << "frame: " <<  frame << std::endl;
+    // std::cout << "frameCount: " << frameCount << std::endl;
+
+    animationFrameTimer += _dt;
+
+    if (animationFrameTimer >= frameDuration)
+    {  
         animationFrameTimer = 0;
-        frame = 0;
-    } 
-        
-    return _sprite;
+        if (currentFrameNumber > (numberOfFrames - 1))
+        {
+
+            currentFrameNumber = 0;
+            _textureRect->x = 0;
+            return;
+        };
+
+        currentFrameNumber++;
+        _textureRect->x = currentFrameNumber * width;
+    };
+
+    return;
 };

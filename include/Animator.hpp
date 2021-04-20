@@ -5,15 +5,16 @@
 class Animator
 {   
     private:
-        int frameCount;
-        float animationFrameTimer;
-        float speed;
+        int numberOfFrames;
+        int currentFrameNumber;
+        int frameDuration;
+        double animationFrameTimer;
         float width;
         float height;
     public: 
-        Animator(int _frameCount,
-                   float _speed,
+        Animator(int _numberOfFrames,
+                   int _frameDuration,
                    float _width,
                    float _height);
-        SDL_Texture* Animate(double _elapsedTime, SDL_Texture *_Sprite);
+        void Animate(double _dt, SDL_Rect* _textureRect);
 };

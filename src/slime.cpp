@@ -24,11 +24,11 @@ void Slime::animate(double elapsedTime)
 
     if ( this->isIdle ) 
     {
-        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
+        this->attackAnimation->Animate(elapsedTime, &this->textureRect);
     }
     else 
     {   
-        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
+        this->attackAnimation->Animate(elapsedTime, &this->textureRect);
     }
 };
 

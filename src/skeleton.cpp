@@ -21,15 +21,7 @@ void Skeleton::move(int _x, int _y)
 
 void Skeleton::animate(double elapsedTime)
 {
-
-    if ( this->isIdle ) 
-    {
-        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
-    }
-    else 
-    {   
-        this->texture = this->attackAnimation->Animate(elapsedTime, this->texture);
-    }
+    this->attackAnimation->Animate(elapsedTime, &this->textureRect);
 };
 
 void Skeleton::render(SDL_Renderer *_renderer)

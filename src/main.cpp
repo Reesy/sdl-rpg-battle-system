@@ -68,9 +68,6 @@ SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren)
 
 static void update(double elapsed)
 {
-    
-  
-    
     return;
     // if (selecting_attack)
     // {
@@ -79,8 +76,7 @@ static void update(double elapsed)
     // else
     // {
     //     cursor_sprite.setPosition(1000, 910);
-    // }
-    
+    // }   
 };
 
 static void render()
@@ -219,13 +215,13 @@ void gameLoop()
     while (accumulator >= dt )
     {
         update(dt);
-        knight->animate(dt);
-        slime->animate(dt);
-        slime2->animate(dt);
-        skeleton->animate(dt);
         accumulator -= dt;
     }
-
+            
+    knight->animate(dt);
+    // slime->animate(dt);
+    // slime2->animate(dt);
+    // skeleton->animate(dt);
     render();
 
     while (SDL_PollEvent(event))
