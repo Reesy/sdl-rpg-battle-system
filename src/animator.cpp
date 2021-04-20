@@ -15,19 +15,12 @@ Animator::Animator(int _numberOfFrames,
 
 void Animator::Animate(double _dt, SDL_Rect* _textureRect)
 {
-
-    // std::cout << "****** animator class *********" <<  std::endl;
-
-    // std::cout << "animationFrameTimer: " <<  animationFrameTimer << std::endl;
-    // std::cout << "frame: " <<  frame << std::endl;
-    // std::cout << "frameCount: " << frameCount << std::endl;
-
     animationFrameTimer += _dt;
 
     if (animationFrameTimer >= frameDuration)
     {  
         animationFrameTimer = 0;
-        if (currentFrameNumber > (numberOfFrames - 1))
+        if (currentFrameNumber >= (numberOfFrames - 1))
         {
 
             currentFrameNumber = 0;

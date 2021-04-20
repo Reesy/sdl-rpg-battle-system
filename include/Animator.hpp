@@ -13,8 +13,8 @@ class Animator
         float height;
     public: 
         Animator(int _numberOfFrames,
-                   int _frameDuration,
-                   float _width,
-                   float _height);
+                 int _frameDuration,
+                 float _width,
+                 float _height);
         void Animate(double _dt, SDL_Rect* _textureRect);
 };

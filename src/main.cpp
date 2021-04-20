@@ -219,9 +219,9 @@ void gameLoop()
     }
             
     knight->animate(dt);
-    // slime->animate(dt);
-    // slime2->animate(dt);
-    // skeleton->animate(dt);
+    slime->animate(dt);
+    slime2->animate(dt);
+    skeleton->animate(dt);
     render();
 
     while (SDL_PollEvent(event))

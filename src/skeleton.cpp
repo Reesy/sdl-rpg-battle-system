@@ -9,8 +9,7 @@ Skeleton::Skeleton(SDL_Texture *_texture,  SDL_Texture *_idleTexture)
     this->textureRect = {0, 0, 32, 32};
     this->positionRect = {0, 0, 60, 60};
     this->isIdle = false;
-    this->attackAnimation = new Animator(5, 5, 32, 32);
-
+    this->attackAnimation = new Animator(5, 300, 32, 32);
 };
 
 void Skeleton::move(int _x, int _y)
