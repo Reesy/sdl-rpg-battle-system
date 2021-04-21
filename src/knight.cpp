@@ -9,8 +9,8 @@ Knight::Knight(SDL_Texture *_texture, SDL_Texture *_idleTexture)
     this->idleTexture = _idleTexture;
     this->textureRect = {0, 0, 120, 60};
     this->positionRect = {0, 0, 200, 200};
-    this->attackAnimation = new Animator(26, 200, 120, 60);
-    this->idleAnimation = new Animator(5, 400, 120, 60);
+    this->attackAnimation = new Animator(26, 100, 120, 60);
+    this->idleAnimation = new Animator(5, 200, 120, 60);
 };
 
 void Knight::move(int _x, int _y)

@@ -116,16 +116,20 @@ static void input()
         {
             case SDLK_RIGHT:
                 selecting_attack =! selecting_attack;
-                //menu_change_sound.play();
+                Mix_PlayChannel(-1, menu_change_sound, 0);
                 break;
             case SDLK_LEFT:
                 selecting_attack =! selecting_attack;
-                //menu_change_sound.play();
+                Mix_PlayChannel(-1, menu_change_sound, 0);
                 break;
             case SDLK_RETURN:
                 if (selecting_attack)
                 {
                     knight->setIdle(false);
+                }
+                else
+                {
+                    knight->setIdle(true);
                 }
                 break;
             default:
@@ -161,6 +165,7 @@ static void loadResources()
     {
         std::cout << "Failed to load font! SDL_font error" << TTF_GetError() << std::endl;
     }
+    
 
 };
 
@@ -177,8 +182,7 @@ static void init()
     attack_text = new Text(font, std::string("Attack"), text_color, attack_text_position, renderer);
     
     SDL_Rect escape_text_position = {410, 290, 75, 50};
-    escape_text = new Text(font, std::string("Escape"), text_color, escape_text_position, renderer);
-
+    escape_text = new Text(font, std::string("Idle"), text_color, escape_text_position, renderer);
 
     cursor_texture_rect = {241, 223, 17, 17};
     cursor_position_rect = {100, 300, 50, 50};
@@ -187,9 +191,13 @@ static void init()
     slime = new Slime(slime_texture_sheet, slime_texture_sheet);
     slime2 = new Slime(slime_texture_sheet, slime_texture_sheet);
     skeleton = new Skeleton(skeleton_texture_sheet, skeleton_texture_sheet);
-    slime->move(500, -35);
-    slime2->move(500, 85);
+    
+    knight->move(50, 0);
+    slime->move(500, -20);
+    slime2->move(500, 105);
     skeleton->move(470, 100);
+
+    Mix_Volume(-1, 20);
 };
 
 void gameLoop()
@@ -217,7 +225,7 @@ void gameLoop()
     }
 
     render();
-    
+
     while (SDL_PollEvent(event))
     {
         input();
