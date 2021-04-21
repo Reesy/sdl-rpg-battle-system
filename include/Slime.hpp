@@ -15,6 +15,7 @@ class Slime: public IMovable,
         float animationFrameTimer;
         float isIdle;
         Animator* attackAnimation;
+        SDL_RendererFlip flip;
 
         
     public: 

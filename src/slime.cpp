@@ -4,13 +4,13 @@
 
 Slime::Slime(SDL_Texture *_texture,  SDL_Texture *_idleTexture)
 {
+    this->flip = SDL_FLIP_HORIZONTAL;
     this->texture = _texture;
     this->idleTexture = _idleTexture;
     this->textureRect = {0, 0, 70, 70};
     this->positionRect = {0, 0, 150, 150};
     this->isIdle = false;
-     this->attackAnimation = new Animator(48, 200, 70, 70);
-
+    this->attackAnimation = new Animator(48, 200, 70, 70);
 };
 
 void Slime::move(int _x, int _y)
@@ -29,12 +29,13 @@ void Slime::animate(double elapsedTime)
     else 
     {   
         this->attackAnimation->Animate(elapsedTime, &this->textureRect);
-    }
+    };
 };
 
 void Slime::render(SDL_Renderer *_renderer)
 {   
-    SDL_RenderCopy(_renderer, this->texture, &this->textureRect, &this->positionRect);
+ 
+    SDL_RenderCopyEx(_renderer, this->texture, &this->textureRect, &this->positionRect, 0.0, NULL, flip);
 };
 
 void Slime::setIdle(bool _idle)

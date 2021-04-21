@@ -112,23 +112,17 @@ static void input()
         switch (event->key.keysym.sym)
         {
             case SDLK_RIGHT:
-                if (selecting_attack)
-                {
-                    selecting_attack = false;
-                    //menu_change_sound.play();
-                };
+   
+                //menu_change_sound.play();
+                knight->setIdle(true);
                 break;
             case SDLK_LEFT:
-                if (!selecting_attack)
-                {
-                    selecting_attack = true;
-                    //menu_change_sound.play();
-                };
+                knight->setIdle(false);
+                //menu_change_sound.play();
+                break;
             case SDLK_RETURN:
-                if (selecting_attack)
-                {
-                    knight->setIdle(false);
-                };
+
+                break;
             default:
                 break;
 
