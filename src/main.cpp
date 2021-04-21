@@ -8,6 +8,7 @@
 #include <Knight.hpp>
 #include <Slime.hpp>
 #include <Skeleton.hpp>
+#include <IText.hpp>
 
 #if __EMSCRIPTEN__
 	#include <emscripten/emscripten.h>
@@ -28,8 +29,8 @@ SDL_Event *event = NULL;
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 TTF_Font *font = NULL;
-// Text attack_text("Attack", font);
-// Text escape_text("Escape", font);
+Text *attack_text = NULL;
+Text *escape_text = NULL;
 Mix_Chunk *menu_change_sound = NULL;
 SDL_Surface *icon = NULL;
 SDL_Texture *menu_texture = NULL;
@@ -40,6 +41,7 @@ SDL_Texture *knight_idle_sheet = NULL;
 SDL_Texture *skeleton_texture_sheet = NULL;
 SDL_Rect cursor_texture_rect;
 SDL_Rect cursor_position_rect;
+SDL_Color text_color;
 
 //Entities
 Knight* knight;
@@ -96,7 +98,8 @@ static void render()
 
     SDL_RenderCopy(renderer, menu_texture, &cursor_texture_rect, &cursor_position_rect);
 
-  
+    attack_text->render(renderer);
+    escape_text->render(renderer);
     // window.draw(attack_text);
     // window.draw(escape_text);
 
@@ -142,7 +145,7 @@ static void loadResources()
     knight_idle_sheet = loadTexture("resources/knight_idle.png", renderer);
     slime_texture_sheet = loadTexture("resources/slime_spritesheet.png", renderer);
     skeleton_texture_sheet = loadTexture("resources/skeleton.png", renderer);
-
+    
     icon = IMG_Load("resources/icon.png");
     if (icon == NULL)
     {
@@ -168,25 +171,20 @@ static void init()
 {
     SDL_SetWindowIcon(window, icon);
 
-
     menu = new Menu(menu_texture);
     menu->move(10, 270);
+   
+    text_color = {255, 255, 255, 255};
+    
+    SDL_Rect attack_text_position = {150, 290, 75, 50};
+    attack_text = new Text(font, std::string("Attack"), text_color, attack_text_position, renderer);
+    
+    SDL_Rect escape_text_position = {410, 290, 75, 50};
+    escape_text = new Text(font, std::string("Escape"), text_color, escape_text_position, renderer);
 
-    // attack_text.setCharacterSize(60);
-    // attack_text.setStyle( Text::Bold);
-    // attack_text.setFillColor( Color::White);
-    // attack_text.move(400, 920);
-    // escape_text.setCharacterSize(60);
-    // escape_text.setStyle( Text::Bold);
-    // escape_text.setFillColor( Color::White);
-    // escape_text.move(1100, 920);
 
-    // cursor_sprite.setTexture(menu_texture);
-    // cursor_sprite.setTextureRect( IntRect(241, 223.3, 17, 17));
-    // cursor_sprite.setScale(6, 6);
-    // cursor_sprite.setPosition(300, 910);
     cursor_texture_rect = {241, 223, 17, 17};
-    cursor_position_rect = {200, 200, 100, 100};
+    cursor_position_rect = {100, 300, 50, 50};
 
     knight = new Knight(knight_texture_sheet, knight_idle_sheet);
     slime = new Slime(slime_texture_sheet, slime_texture_sheet);
