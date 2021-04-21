@@ -23,7 +23,7 @@
 #endif
 
 
-//game objects
+//Resources
 SDL_Event *event = NULL;
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
@@ -31,25 +31,28 @@ TTF_Font *font = NULL;
 // Text attack_text("Attack", font);
 // Text escape_text("Escape", font);
 Mix_Chunk *menu_change_sound = NULL;
-SDL_Texture *menu_texture = NULL;
-//SDL_Texture *cursor_sprite = NULL;
 SDL_Surface *icon = NULL;
-
-//Characters 
+SDL_Texture *menu_texture = NULL;
+SDL_Texture *cursor_texture = NULL;
 SDL_Texture *knight_texture_sheet = NULL;
 SDL_Texture *slime_texture_sheet = NULL;
 SDL_Texture *knight_idle_sheet = NULL;
 SDL_Texture *skeleton_texture_sheet = NULL;
+SDL_Rect cursor_texture_rect;
+SDL_Rect cursor_position_rect;
 
+//Entities
 Knight* knight;
 Slime* slime;
 Slime* slime2;
 Skeleton* skeleton;
 Menu* menu;
+
+//Global state
 bool selecting_attack = true;
 bool quit = false;
 
-
+//Timing config
 double dt = 10;
 double currentTime = SDL_GetTicks();
 double accumulator = 0.0;
@@ -91,7 +94,9 @@ static void render()
     slime2->render(renderer);
     skeleton->render(renderer);
 
-    //SDL_RenderCopy(menu_texture)
+    SDL_RenderCopy(renderer, menu_texture, &cursor_texture_rect, &cursor_position_rect);
+
+  
     // window.draw(attack_text);
     // window.draw(escape_text);
 
@@ -138,7 +143,6 @@ static void loadResources()
     slime_texture_sheet = loadTexture("resources/slime_spritesheet.png", renderer);
     skeleton_texture_sheet = loadTexture("resources/skeleton.png", renderer);
 
-
     icon = IMG_Load("resources/icon.png");
     if (icon == NULL)
     {
@@ -181,7 +185,8 @@ static void init()
     // cursor_sprite.setTextureRect( IntRect(241, 223.3, 17, 17));
     // cursor_sprite.setScale(6, 6);
     // cursor_sprite.setPosition(300, 910);
-
+    cursor_texture_rect = {241, 223, 17, 17};
+    cursor_position_rect = {200, 200, 100, 100};
 
     knight = new Knight(knight_texture_sheet, knight_idle_sheet);
     slime = new Slime(slime_texture_sheet, slime_texture_sheet);

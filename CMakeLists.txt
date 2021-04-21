@@ -13,6 +13,7 @@ set(MY_SOURCES
         src/menu.cpp
         src/skeleton.cpp
         src/slime.cpp
+        src/text.cpp
         include/IAnimatable.hpp
         include/ICollidable.hpp
         include/IMovable.hpp
@@ -22,7 +23,7 @@ set(MY_SOURCES
         include/Menu.hpp
         include/Skeleton.hpp
         include/Slime.hpp
-
+        include/IText.hpp
 )
 
 set(MY_RESOURCES resources)
