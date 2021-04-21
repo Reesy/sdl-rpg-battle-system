@@ -31,14 +31,14 @@ void Skeleton::render(SDL_Renderer *_renderer)
 void Skeleton::setIdle(bool _idle)
 {
     this->isIdle = _idle;
-}
+};
 
 int Skeleton::getX()
 {
     return x;
-}
+};
 
 int Skeleton::getY()
 {
     return y;
-}
+};

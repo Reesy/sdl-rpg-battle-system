@@ -33,22 +33,21 @@ void Slime::animate(double elapsedTime)
 };
 
 void Slime::render(SDL_Renderer *_renderer)
-{   
- 
+{
     SDL_RenderCopyEx(_renderer, this->texture, &this->textureRect, &this->positionRect, 0.0, NULL, flip);
 };
 
 void Slime::setIdle(bool _idle)
 {
     this->isIdle = _idle;
-}
+};
 
 int Slime::getX()
 {
     return x;
-}
+};
 
 int Slime::getY()
 {
     return y;
-}
+};

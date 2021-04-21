@@ -64,11 +64,11 @@ SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren)
 	if (texture == nullptr)
 	{
         std::cout << "Failed to load image: " << file.c_str() << "Failure reason: " << IMG_GetError() << std::endl;
-	}
+	};
 	return texture;
-}
+};
 
-static void update(double elapsed)
+static void update()
 {
     if (selecting_attack)
     {
@@ -77,9 +77,8 @@ static void update(double elapsed)
     else
     {
         cursor_position_rect.x = 360;
-    }   
+    };
     return;
-
 };
 
 static void render()
@@ -104,7 +103,6 @@ static void render()
 
 static void input()
 {
-    
     if (event->type == SDL_QUIT) 
     {
         quit = true;
@@ -130,11 +128,10 @@ static void input()
                 else
                 {
                     knight->setIdle(true);
-                }
+                };
                 break;
             default:
                 break;
-
         };
     };
 };
@@ -151,22 +148,20 @@ static void loadResources()
     if (icon == NULL)
     {
         std::cout << "Faled to load icon! SDL_Image error: " << IMG_GetError() << std::endl;
-    }
+    };
 
     menu_change_sound = Mix_LoadWAV("resources/ff_bleep.ogg"); 
     if (menu_change_sound == NULL)
     {
         std::cout << "Faled to load menu change sound! SDL_MiXER_ERROR: " << Mix_GetError() << std::endl;
-    }
+    };
     
     std::string fontPath = "resources/sansation.ttf";
     font = TTF_OpenFont(fontPath.c_str(), 40);
     if (font == NULL)
     {
         std::cout << "Failed to load font! SDL_font error" << TTF_GetError() << std::endl;
-    }
-    
-
+    };
 };
 
 static void init()
@@ -208,7 +203,7 @@ void gameLoop()
     if (frameTime > 250)
     {
         frameTime = 250;
-    }
+    };
 
     currentTime = newTime;
 
@@ -216,26 +211,26 @@ void gameLoop()
 
     while (accumulator >= dt )
     {
-        update(dt);
+        update();
         knight->animate(dt);
         slime->animate(dt);
         slime2->animate(dt);
         skeleton->animate(dt);
         accumulator -= dt;
-    }
+    };
 
     render();
 
     while (SDL_PollEvent(event))
     {
         input();
-    }
-}
+    };
+};
 
 int main(int, char const**)
 {
 
-        //Start up SDL and make sure it went ok
+    //Start up SDL and make sure it went ok
 	if ( SDL_Init (SDL_INIT_VIDEO) != 0 )
     {	
 		throw "SDL could not be initialised";
@@ -246,20 +241,20 @@ int main(int, char const**)
     if( !( IMG_Init( imgFlags ) & imgFlags ) )
     {
         printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-    }
+    };
 
  	//Also need to init SDL_ttf
 	if (TTF_Init() != 0)
     {
 		SDL_Quit();
 		return 1;
-	}
+	};
 
     //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
-    }
+    };
     
     window = SDL_CreateWindow("SDL RPG BATTLE SYSTEM", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 360, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     
@@ -268,7 +263,7 @@ int main(int, char const**)
     if (!SDL_RenderSetLogicalSize(renderer, 640, 360))
     {
         std::cout << SDL_GetError() << std::endl;
-    }
+    };
 
     event = new SDL_Event;
     
@@ -281,10 +276,10 @@ int main(int, char const**)
 		while (quit != true)
 		{
 			gameLoop();
-		}
+		};
 	#endif
     
-	SDL_DestroyRenderer(renderer );
+	SDL_DestroyRenderer( renderer );
 	SDL_DestroyWindow( window );
 	renderer = NULL;
 	window = NULL;

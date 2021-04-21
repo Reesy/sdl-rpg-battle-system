@@ -12,7 +12,6 @@ class Knight: public IMovable,
         SDL_Texture *idleTexture;
         SDL_Rect textureRect;
         SDL_Rect positionRect;
-        float animationFrameTimer;
         float isIdle;
         Animator* attackAnimation;
         Animator* idleAnimation;

@@ -37,12 +37,11 @@ void Text::updateText(std::string _newMessage)
 
 void Text::render(SDL_Renderer *_renderer)
 {
-    //SDL_rendercopt
     SDL_RenderCopy(_renderer, this->texture , NULL, &this->position);
-}
+};
 
 
 void Text::move(int x, int y)
 {
 
-}
+};

@@ -23,9 +23,9 @@ void Menu::render(SDL_Renderer *_renderer)
 int Menu::getX()
 {
     return x;
-}
+};
 
 int Menu::getY()
 {
     return y;
-}
+};

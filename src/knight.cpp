@@ -51,14 +51,14 @@ void Knight::setIdle(bool _idle)
 {
     this->isIdle = _idle;
     return;
-}
+};
 
 int Knight::getX()
 {
     return x;
-}
+};
 
 int Knight::getY()
 {
     return y;
-}
+};
