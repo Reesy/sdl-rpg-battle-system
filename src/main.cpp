@@ -209,13 +209,14 @@ void gameLoop()
     while (accumulator >= dt )
     {
         update(dt);
+        knight->animate(dt);
+        slime->animate(dt);
+        slime2->animate(dt);
+        skeleton->animate(dt);
         accumulator -= dt;
     }
             
-    knight->animate(dt);
-    slime->animate(dt);
-    slime2->animate(dt);
-    skeleton->animate(dt);
+
     render();
 
     while (SDL_PollEvent(event))
