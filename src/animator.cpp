@@ -11,6 +11,7 @@ Animator::Animator(int _numberOfFrames,
     width = _width;
     height = _height;
     currentFrameNumber = 0;
+    animationFrameTimer = 0;
 };
 
 void Animator::Animate(double _dt, SDL_Rect* _textureRect)
