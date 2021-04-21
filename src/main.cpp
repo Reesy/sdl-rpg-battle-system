@@ -23,7 +23,6 @@
     #include <SDL_mixer.h>
 #endif
 
-
 //Resources
 SDL_Event *event = NULL;
 SDL_Window *window = NULL;
@@ -64,24 +63,23 @@ SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren)
 	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
 	if (texture == nullptr)
 	{
-        printf("Failed to load image\n", file.c_str());
-        std::cout << "Failure reason: " << IMG_GetError() << std::endl;
+        std::cout << "Failed to load image: " << file.c_str() << "Failure reason: " << IMG_GetError() << std::endl;
 	}
 	return texture;
 }
 
-
 static void update(double elapsed)
 {
+    if (selecting_attack)
+    {
+        cursor_position_rect.x = 100;
+    }   
+    else
+    {
+        cursor_position_rect.x = 360;
+    }   
     return;
-    // if (selecting_attack)
-    // {
-    //     cursor_sprite.setPosition(300, 910);
-    // }   
-    // else
-    // {
-    //     cursor_sprite.setPosition(1000, 910);
-    // }   
+
 };
 
 static void render()
@@ -100,9 +98,6 @@ static void render()
 
     attack_text->render(renderer);
     escape_text->render(renderer);
-    // window.draw(attack_text);
-    // window.draw(escape_text);
-
 
     SDL_RenderPresent(renderer);
 };
@@ -120,16 +115,18 @@ static void input()
         switch (event->key.keysym.sym)
         {
             case SDLK_RIGHT:
-   
+                selecting_attack =! selecting_attack;
                 //menu_change_sound.play();
-                knight->setIdle(true);
                 break;
             case SDLK_LEFT:
-                knight->setIdle(false);
+                selecting_attack =! selecting_attack;
                 //menu_change_sound.play();
                 break;
             case SDLK_RETURN:
-
+                if (selecting_attack)
+                {
+                    knight->setIdle(false);
+                }
                 break;
             default:
                 break;
@@ -218,10 +215,9 @@ void gameLoop()
         skeleton->animate(dt);
         accumulator -= dt;
     }
-            
 
     render();
-
+    
     while (SDL_PollEvent(event))
     {
         input();
