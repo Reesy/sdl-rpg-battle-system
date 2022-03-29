@@ -153,26 +153,41 @@ find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
                 # and ENV{SDL2MIXERDIR}
                 include/SDL2 include
   PATHS ${SDL2_MIXER_PATH}
+  ${PROJECT_SOURCE_DIR}/libs/mingw/SDL2_mixer-2.0.4/i686-w64-mingw32/include
+	${PROJECT_SOURCE_DIR}/libs/mingw/SDL2_mixer-2.0.4/x86_64-w64-mingw32/include
   DOC "Where the SDL2_mixer headers can be found"
 )
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(VC_LIB_PATH_SUFFIX lib/x64)
+  # Search for the SDL2_mixer library
+  find_library(SDL2_MIXER_LIBRARY
+    NAMES SDL2_mixer
+    HINTS
+      ENV SDL2MIXERDIR
+      ENV SDL2DIR
+      ${SDL2_MIXER_NO_DEFAULT_PATH_CMD}
+    PATH_SUFFIXES lib
+    PATHS ${SDL2_MIXER_PATH}
+    ${PROJECT_SOURCE_DIR}/libs/mingw/SDL2_mixer-2.0.4/x86_64-w64-mingw32/lib/
+		${PROJECT_SOURCE_DIR}/libs/vs2019/SDL2_mixer-2.0.4/lib/x64
+    DOC "Where the SDL2_mixer Library can be found"
+  )
 else()
-  set(VC_LIB_PATH_SUFFIX lib/x86)
+    # Search for the SDL2_mixer library
+  find_library(SDL2_MIXER_LIBRARY
+    NAMES SDL2_mixer
+    HINTS
+      ENV SDL2MIXERDIR
+      ENV SDL2DIR
+      ${SDL2_MIXER_NO_DEFAULT_PATH_CMD}
+    PATH_SUFFIXES lib
+    PATHS ${SDL2_MIXER_PATH}
+    ${PROJECT_SOURCE_DIR}/libs/mingw/SDL2_mixer-2.0.4/i686-w64-mingw32/lib/
+    ${PROJECT_SOURCE_DIR}/libs/vs2019/SDL2_mixer-2.0.4/lib/x86
+    DOC "Where the SDL2_mixer Library can be found"
+  )
 endif()
 
-# Search for the SDL2_mixer library
-find_library(SDL2_MIXER_LIBRARY
-  NAMES SDL2_mixer
-  HINTS
-    ENV SDL2MIXERDIR
-    ENV SDL2DIR
-    ${SDL2_MIXER_NO_DEFAULT_PATH_CMD}
-  PATH_SUFFIXES lib ${VC_LIB_PATH_SUFFIX}
-  PATHS ${SDL2_MIXER_PATH}
-  DOC "Where the SDL2_mixer Library can be found"
-)
 
 # Read SDL2_mixer version
 if(SDL2_MIXER_INCLUDE_DIR AND EXISTS "${SDL2_MIXER_INCLUDE_DIR}/SDL_mixer.h")

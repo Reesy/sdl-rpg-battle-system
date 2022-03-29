@@ -23,6 +23,8 @@
     #include <SDL_mixer.h>
 #endif
 
+#undef main // We do this because main gets added by SDL_main but we don't want it
+
 //Resources
 SDL_Event *event = NULL;
 SDL_Window *window = NULL;
