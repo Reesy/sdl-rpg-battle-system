@@ -1,5 +1,6 @@
 build
 embuild
+vsbuild
 CMakeFiles
 Makefile
 cmake_install.cmake
