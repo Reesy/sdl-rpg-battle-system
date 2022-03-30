@@ -86,10 +86,31 @@ Manually building with emscripten
     
     
 ## Building and hosting on the web
-
+ 
+_This will create a make file and copy a basic index.html and python script to the embuild folder_
+``` 
+emcmake cmake -B embuild . 
+cd embuild && make
+``` 
 Serving the file using httpserver with Python 2: ```python -m SimpleHTTPServer 8080``` 
 
-    
+## Hosting with docker  
+### Building the image 
+_The emscripten build must me run first_
+
+```
+emcmake cmake -B embuild . 
+cd embuild && make
+docker build -t <desired_image_name> .
+``` 
+ 
+### Running the image
+```
+docker run --name <desired_container_name> -p <desired_port>:3000 <desired_image_name> 
+```
+
+You will then be able to view the application on ```http://localhost:<desired_port>``` i.e http://localhost:3000
+ 
     
 ## Debugging
     
